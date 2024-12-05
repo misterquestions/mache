@@ -10,7 +10,7 @@ mache {
     minecraftJarType = MinecraftJarType.SERVER
 
     repositories.register("sonatype snapshots") {
-        url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+        url = "https://repo.papermc.io/repository/maven-public/"
         includeGroups.add("org.vineflower")
     }
 
