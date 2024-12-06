@@ -19,7 +19,6 @@ jobs:
     if: startsWith(github.ref, 'refs/heads/release/') || startsWith(github.ref, 'refs/heads/snapshot/')
     steps:
       - uses: actions/checkout@v4
-      - uses: gradle/actions/wrapper-validation@v3
       - name: Version Name
         id: version
         shell: bash
@@ -53,7 +52,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 17
-      - uses: gradle/actions/setup-gradle@v3
+      - uses: gradle/actions/setup-gradle@v4
         name: Setup Gradle
       - name: Apply Patches
         run: ./gradlew ':versions:${{ needs.verify.outputs.project_name }}:setup'
@@ -84,7 +83,7 @@ jobs:
           path: sources
       - name: Extract sources
         run: tar -xf sources/sources.tar versions/${{ needs.verify.outputs.folder_name }}/src/ && rm -r sources/
-      - uses: gradle/actions/setup-gradle@v3
+      - uses: gradle/actions/setup-gradle@v4
         name: Setup Gradle
       - name: Build
         run: ./gradlew ':versions:${{ needs.verify.outputs.project_name }}:build'
@@ -98,7 +97,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 17
-      - uses: gradle/actions/setup-gradle@v3
+      - uses: gradle/actions/setup-gradle@v4
         name: Setup Gradle
       - name: Deploy Mache Artifact
         run: ./gradlew ':versions:${{ needs.verify.outputs.project_name }}:publishMachePublicationToPaperMCRepository'
