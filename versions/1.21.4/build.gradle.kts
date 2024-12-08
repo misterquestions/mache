@@ -1,7 +1,7 @@
 import io.papermc.sculptor.shared.util.MinecraftJarType
 
 plugins {
-    id("io.papermc.sculptor.version") version "1.0.10"
+    id("io.papermc.sculptor.version") version "1.0.11-SNAPSHOT"
 }
 
 val generateReportsProperty = providers.gradleProperty("generateReports")
@@ -43,4 +43,5 @@ dependencies {
 
 dependencies {
     compileOnly("org.jetbrains:annotations:24.0.1")
+    compileOnly("com.google.code.findbugs:jsr305:3.0.2")
 }
