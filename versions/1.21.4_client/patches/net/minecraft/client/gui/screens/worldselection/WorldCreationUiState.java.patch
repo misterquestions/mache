@@ -1,0 +1,19 @@
+--- a/net/minecraft/client/gui/screens/worldselection/WorldCreationUiState.java
++++ b/net/minecraft/client/gui/screens/worldselection/WorldCreationUiState.java
+@@ -13,6 +_,7 @@
+ import net.minecraft.core.Registry;
+ import net.minecraft.core.registries.Registries;
+ import net.minecraft.network.chat.Component;
++import net.minecraft.network.chat.MutableComponent;
+ import net.minecraft.resources.ResourceKey;
+ import net.minecraft.tags.TagKey;
+ import net.minecraft.tags.WorldPresetTags;
+@@ -311,7 +_,7 @@
+             return Optional.ofNullable(this.preset)
+                 .flatMap(Holder::unwrapKey)
+                 .map(resourceKey -> Component.translatable(resourceKey.location().toLanguageKey("generator")))
+-                .orElse(CUSTOM_WORLD_DESCRIPTION);
++                .orElse((MutableComponent) CUSTOM_WORLD_DESCRIPTION);
+         }
+ 
+         public boolean isAmplified() {

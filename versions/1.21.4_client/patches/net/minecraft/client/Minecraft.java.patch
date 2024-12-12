@@ -1,0 +1,12 @@
+--- a/net/minecraft/client/Minecraft.java
++++ b/net/minecraft/client/Minecraft.java
+@@ -2296,7 +_,8 @@
+     }
+ 
+     public CompletableFuture<Void> delayTextureReload() {
+-        return this.<CompletableFuture<Void>>submit(this::reloadResourcePacks).thenCompose(completableFuture -> (CompletionStage<Void>)completableFuture);
++        return this.<CompletableFuture<Void>>submit(() -> this.reloadResourcePacks())
++                .thenCompose(completableFuture -> (CompletionStage<Void>)completableFuture);
+     }
+ 
+     public void updateReportEnvironment(ReportEnvironment reportEnvironment) {

@@ -1,0 +1,41 @@
+--- a/com/mojang/blaze3d/font/TrueTypeGlyphProvider.java
++++ b/com/mojang/blaze3d/font/TrueTypeGlyphProvider.java
+@@ -86,6 +_,7 @@
+ 
+     private GlyphInfo loadGlyph(int i, FT_Face ft_Face, int i1) {
+         int i2 = FreeType.FT_Load_Glyph(ft_Face, i1, 4194312);
++        
+         if (i2 != 0) {
+             FreeTypeUtil.assertError(i2, String.format(Locale.ROOT, "Loading glyph U+%06X", i));
+         }
+@@ -93,15 +_,22 @@
+         FT_GlyphSlot ft_GlyphSlot = ft_Face.glyph();
+         if (ft_GlyphSlot == null) {
+             throw new NullPointerException(String.format(Locale.ROOT, "Glyph U+%06X not initialized", i));
+-        } else {
+-            float f = FreeTypeUtil.x(ft_GlyphSlot.advance());
+-            FT_Bitmap ft_Bitmap = ft_GlyphSlot.bitmap();
+-            int i3 = ft_GlyphSlot.bitmap_left();
+-            int i4 = ft_GlyphSlot.bitmap_top();
+-            int i5 = ft_Bitmap.width();
+-            int i6 = ft_Bitmap.rows();
+-            return (GlyphInfo)(i5 > 0 && i6 > 0 ? new TrueTypeGlyphProvider.Glyph(i3, i4, i5, i6, f, i1) : () -> f / this.oversample);
++        } 
++        
++        float f = FreeTypeUtil.x(ft_GlyphSlot.advance());
++        FT_Bitmap ft_Bitmap = ft_GlyphSlot.bitmap();
++        int i3 = ft_GlyphSlot.bitmap_left();
++        int i4 = ft_GlyphSlot.bitmap_top();
++        int i5 = ft_Bitmap.width();
++        int i6 = ft_Bitmap.rows();
++        
++        if (!(i5 > 0 && i6 > 0)) {
++            throw new IllegalStateException(String.format(Locale.ROOT, "Invalid glyph size: %d %d", i5, i6));
+         }
++        
++        return new TrueTypeGlyphProvider.Glyph(i3, i4, i5, i6, f, i1);
++        
++        //return (GlyphInfo)(i5 > 0 && i6 > 0 ? new TrueTypeGlyphProvider.Glyph(i3, i4, i5, i6, f, i1) : () -> f / this.oversample);
+     }
+ 
+     FT_Face validateFontOpen() {
